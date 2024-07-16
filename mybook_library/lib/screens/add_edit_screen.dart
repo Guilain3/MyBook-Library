@@ -53,13 +53,15 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 initialValue: _title,
                 decoration: InputDecoration(labelText: 'Title'),
                 onSaved: (value) => _title = value!,
-                validator: (value) => value!.isEmpty ? 'Please enter a title' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter a title' : null,
               ),
               TextFormField(
                 initialValue: _author,
                 decoration: InputDecoration(labelText: 'Author'),
                 onSaved: (value) => _author = value!,
-                validator: (value) => value!.isEmpty ? 'Please enter an author' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter an author' : null,
               ),
               RatingStars(
                 rating: _rating,
