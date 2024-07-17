@@ -14,34 +14,36 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: ListView(
-        children: [
-          SwitchListTile(
-            title: Text('Dark Mode'),
-            value: appState.isDarkMode,
-            onChanged: (value) {
-              appState.setTheme(value);
-              UsrPrefs.setTheme(value);
-            },
-          ),
-          ListTile(
-            title: Text('Sort Order'),
-            trailing: DropdownButton<String>(
-              value: bkState.sortOrder,
+      body: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: ListView(
+          children: [
+            SwitchListTile(
+              title: Text('Dark Mode'),
+              value: appState.isDarkMode,
               onChanged: (value) {
-                bkState.setSortOrder(value!);
-                UsrPrefs.setSortOrder(value);
+                appState.setTheme(value);
+                UsrPrefs.setTheme(value);
               },
-              items: ['title', 'author', 'rating']
-                  .map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
             ),
-          ),
-        ],
+            ListTile(
+              title: Text('Sort Order'),
+              trailing: DropdownButton<String>(
+                value: bkState.sortOrder,
+                onChanged: (value) {
+                  bkState.setSortOrder(value!);
+                  UsrPrefs.setSortOrder(value);
+                },
+                items: ['title', 'author', 'rating'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

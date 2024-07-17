@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../state/book_state.dart';
-import '../data/models/book_model.dart';
 import '../components/rating_star.dart';
+import '../data/models/book_model.dart';
 
 class AddEditScreen extends StatefulWidget {
   final BkMdl? book;
@@ -43,6 +43,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
       appBar: AppBar(
         title: Text(widget.book == null ? 'Add Book' : 'Edit Book'),
       ),
+      backgroundColor: Colors.purple[100], // Light purple background color
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -54,14 +55,14 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 decoration: InputDecoration(labelText: 'Title'),
                 onSaved: (value) => _title = value!,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter a title' : null,
+                value!.isEmpty ? 'Please enter a title' : null,
               ),
               TextFormField(
                 initialValue: _author,
                 decoration: InputDecoration(labelText: 'Author'),
                 onSaved: (value) => _author = value!,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter an author' : null,
+                value!.isEmpty ? 'Please enter an author' : null,
               ),
               RatingStars(
                 rating: _rating,

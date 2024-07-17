@@ -18,7 +18,7 @@ class BookDetailScreen extends StatelessWidget {
             ? Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Author: ${book!.author}', style: TextStyle(fontSize: 18)),
+            Text('Author: ${book!.author}', style: TextStyle(fontSize: 20)),
             SizedBox(height: 10),
             Text('Rating: ${book!.rating}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),

@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               child: Text(
                 'Menu',
@@ -30,7 +30,10 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.book),
-              title: Text('View All Books'),
+              title: Text(
+                'View All Books',
+                style: TextStyle(fontSize: 18),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 // Handle the view all books action
@@ -38,7 +41,10 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              title: Text(
+                'Settings',
+                style: TextStyle(fontSize: 18),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/settings');
@@ -46,24 +52,33 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.share),
-              title: Text('Shared Preferences'),
+              title: Text(
+                'Shared Preferences',
+                style: TextStyle(fontSize: 18),
+              ),
               onTap: () {
                 Navigator.pop(context);
-                // Handle the shared preferences action
+
               },
             ),
           ],
         ),
       ),
-      body: ListView.builder(
-        itemCount: bkState.books.length,
-        itemBuilder: (context, index) {
-          return BkCrd(book: bkState.books[index]);
-        },
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.purple[100],
+        ),
+        child: ListView.builder(
+          itemCount: bkState.books.length,
+          itemBuilder: (context, index) {
+            return BkCrd(book: bkState.books[index]);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, '/add_edit'),
         child: Icon(Icons.add),
+        backgroundColor: Colors.purple[200],
       ),
     );
   }
