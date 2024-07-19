@@ -43,7 +43,6 @@ class _AddEditScreenState extends State<AddEditScreen> {
       appBar: AppBar(
         title: Text(widget.book == null ? 'Add Book' : 'Edit Book'),
       ),
-      backgroundColor: Colors.purple[100], // Light purple background color
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(

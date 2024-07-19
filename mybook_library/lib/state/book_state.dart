@@ -5,7 +5,8 @@ import '../data/prefs.dart';
 
 class BkSt extends ChangeNotifier {
   List<BkMdl> _books = [];
-  List<BkMdl> get books => _books;
+  List<BkMdl> _filteredBooks = []; // New list for filtered books
+  List<BkMdl> get books => _filteredBooks; // Return filtered books instead of all books
 
   String _sortOrder = 'title'; // Default sort order
   String get sortOrder => _sortOrder;
@@ -23,6 +24,7 @@ class BkSt extends ChangeNotifier {
 
   Future<void> loadBooks() async {
     _books = await DbProv().getBooks();
+    _filteredBooks = _books; // Initialize filtered books with all books
     sortBooks();
     notifyListeners();
   }
@@ -51,14 +53,28 @@ class BkSt extends ChangeNotifier {
   void sortBooks() {
     switch (_sortOrder) {
       case 'author':
-        _books.sort((a, b) => a.author.compareTo(b.author));
+        _filteredBooks.sort((a, b) => a.author.compareTo(b.author));
         break;
       case 'rating':
-        _books.sort((a, b) => b.rating.compareTo(a.rating));
+        _filteredBooks.sort((a, b) => b.rating.compareTo(a.rating));
         break;
       case 'title':
       default:
-        _books.sort((a, b) => a.title.compareTo(b.title));
+        _filteredBooks.sort((a, b) => a.title.compareTo(b.title));
     }
+  }
+
+  // New method to filter books based on search query
+  void searchBooks(String query) {
+    if (query.isEmpty) {
+      _filteredBooks = _books;
+    } else {
+      _filteredBooks = _books.where((book) {
+        return book.title.toLowerCase().contains(query.toLowerCase()) ||
+            book.author.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    }
+    sortBooks();
+    notifyListeners();
   }
 }

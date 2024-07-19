@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).appBarTheme.backgroundColor,
               ),
               child: Text(
                 'Menu',
@@ -29,10 +29,10 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.book),
+              leading: Icon(Icons.book, color: Theme.of(context).iconTheme.color),
               title: Text(
                 'View All Books',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18, color: Theme.of(context).textTheme.bodyMedium?.color),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -40,10 +40,10 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
+              leading: Icon(Icons.settings, color: Theme.of(context).iconTheme.color),
               title: Text(
                 'Settings',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18, color: Theme.of(context).textTheme.bodyMedium?.color),
               ),
               onTap: () {
                 Navigator.pop(context);
@@ -51,14 +51,13 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.share),
+              leading: Icon(Icons.share, color: Theme.of(context).iconTheme.color),
               title: Text(
                 'Shared Preferences',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18, color: Theme.of(context).textTheme.bodyMedium?.color),
               ),
               onTap: () {
                 Navigator.pop(context);
-
               },
             ),
           ],
@@ -66,19 +65,36 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.purple[100],
+          color: Theme.of(context).scaffoldBackgroundColor,
         ),
-        child: ListView.builder(
-          itemCount: bkState.books.length,
-          itemBuilder: (context, index) {
-            return BkCrd(book: bkState.books[index]);
-          },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) => bkState.searchBooks(value),
+                decoration: InputDecoration(
+                  labelText: 'Search by title or author',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.search, color: Theme.of(context).iconTheme.color),
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: bkState.books.length,
+                itemBuilder: (context, index) {
+                  return BkCrd(book: bkState.books[index]);
+                },
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, '/add_edit'),
         child: Icon(Icons.add),
-        backgroundColor: Colors.purple[200],
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
     );
   }
