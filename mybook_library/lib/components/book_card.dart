@@ -16,7 +16,7 @@ class BkCrd extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           book.isRead ? Icons.check_circle : Icons.radio_button_unchecked,
-          color: book.isRead ? Colors.deepPurple : Colors.white10,
+          color: book.isRead ? Colors.purple[200] : Colors.white10,
           size: 30,
         ),
         title: Text(book.title),
