@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book Library'),
+        title: Text(' Personal Book Library'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                 color: Theme.of(context).appBarTheme.backgroundColor,
               ),
               child: Text(
-                'Menu',
+                'My Library',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -49,17 +49,7 @@ class HomeScreen extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/settings');
               },
-            ),
-            ListTile(
-              leading: Icon(Icons.share, color: Theme.of(context).iconTheme.color),
-              title: Text(
-                'Shared Preferences',
-                style: TextStyle(fontSize: 18, color: Theme.of(context).textTheme.bodyMedium?.color),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            )
           ],
         ),
       ),

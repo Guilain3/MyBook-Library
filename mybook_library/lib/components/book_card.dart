@@ -14,6 +14,11 @@ class BkCrd extends StatelessWidget {
 
     return Card(
       child: ListTile(
+        leading: Icon(
+          book.isRead ? Icons.check_circle : Icons.radio_button_unchecked,
+          color: book.isRead ? Colors.deepPurple : Colors.white10,
+          size: 30,
+        ),
         title: Text(book.title),
         subtitle: Text(book.author),
         trailing: PopupMenuButton<String>(

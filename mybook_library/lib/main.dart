@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+
       providers: [
         ChangeNotifierProvider(create: (_) => AppSt()),
         ChangeNotifierProvider(create: (_) => BkSt()),
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
             theme: appState.isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
             routes: AppRoutes.routes,
             initialRoute: '/',
+            debugShowCheckedModeBanner: false,
           );
         },
       ),
