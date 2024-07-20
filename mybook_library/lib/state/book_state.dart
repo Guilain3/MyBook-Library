@@ -5,11 +5,14 @@ import '../data/prefs.dart';
 
 class BkSt extends ChangeNotifier {
   List<BkMdl> _books = [];
-  List<BkMdl> _filteredBooks = []; // New list for filtered books
-  List<BkMdl> get books => _filteredBooks; // Return filtered books instead of all books
+  List<BkMdl> _filteredBooks = [];
+  List<BkMdl> get books => _filteredBooks;
 
-  String _sortOrder = 'title'; // Default sort order
+  String _sortOrder = 'title';
   String get sortOrder => _sortOrder;
+
+  bool _showRead = true;
+  bool get showRead => _showRead;
 
   BkSt() {
     loadSortOrder();
@@ -24,7 +27,8 @@ class BkSt extends ChangeNotifier {
 
   Future<void> loadBooks() async {
     _books = await DbProv().getBooks();
-    _filteredBooks = _books; // Initialize filtered books with all books
+    _filteredBooks = _books;
+    filterBooks();
     sortBooks();
     notifyListeners();
   }
@@ -65,7 +69,6 @@ class BkSt extends ChangeNotifier {
     }
   }
 
-  // New method to filter books based on search query
   void searchBooks(String query) {
     if (query.isEmpty) {
       _filteredBooks = _books;
@@ -75,6 +78,22 @@ class BkSt extends ChangeNotifier {
             book.author.toLowerCase().contains(query.toLowerCase());
       }).toList();
     }
+    filterBooks();
+    sortBooks();
+    notifyListeners();
+  }
+
+  void filterBooks() {
+    if (_showRead) {
+      _filteredBooks = _books;
+    } else {
+      _filteredBooks = _books.where((book) => !book.isRead).toList();
+    }
+  }
+
+  void toggleShowRead(bool show) {
+    _showRead = show;
+    filterBooks();
     sortBooks();
     notifyListeners();
   }

@@ -40,6 +40,13 @@ class SettingsScreen extends StatelessWidget {
                 }).toList(),
               ),
             ),
+            SwitchListTile(
+              title: Text('Show Read Books'),
+              value: bkState.showRead,
+              onChanged: (value) {
+                bkState.toggleShowRead(value);
+              },
+            ),
           ],
         ),
       ),
