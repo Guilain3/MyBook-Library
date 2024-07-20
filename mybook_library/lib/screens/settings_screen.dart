@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../state/app_state.dart';
 import '../state/book_state.dart';
-import '../data/prefs.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -23,16 +22,15 @@ class SettingsScreen extends StatelessWidget {
               value: appState.isDarkMode,
               onChanged: (value) {
                 appState.setTheme(value);
-                UsrPrefs.setTheme(value);
               },
             ),
             ListTile(
               title: Text('Sort Order'),
               trailing: DropdownButton<String>(
-                value: bkState.sortOrder,
+                value: appState.sortOrder,
                 onChanged: (value) {
-                  bkState.setSortOrder(value!);
-                  UsrPrefs.setSortOrder(value);
+                  appState.setSortOrder(value!);
+                  bkState.setSortOrder(value);
                 },
                 items: ['title', 'author', 'rating'].map((String value) {
                   return DropdownMenuItem<String>(

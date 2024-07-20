@@ -46,6 +46,7 @@ class BkSt extends ChangeNotifier {
 
   void setSortOrder(String order) {
     _sortOrder = order;
+    UsrPrefs.setSortOrder(order);
     sortBooks();
     notifyListeners();
   }
