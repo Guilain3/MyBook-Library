@@ -6,13 +6,16 @@ import '../data/prefs.dart';
 class BkSt extends ChangeNotifier {
   List<BkMdl> _books = [];
   List<BkMdl> _filteredBooks = [];
-  List<BkMdl> get books => _filteredBooks;
+  List<BkMdl> get books => _books;
+  List<BkMdl> get filteredBooks => _filteredBooks;
 
   String _sortOrder = 'title';
   String get sortOrder => _sortOrder;
 
   bool _showRead = true;
   bool get showRead => _showRead;
+
+  String _searchQuery = '';
 
   BkSt() {
     loadSortOrder();
@@ -21,15 +24,13 @@ class BkSt extends ChangeNotifier {
 
   Future<void> loadSortOrder() async {
     _sortOrder = await UsrPrefs.getSortOrder();
-    sortBooks();
+    applyFilters();
     notifyListeners();
   }
 
   Future<void> loadBooks() async {
     _books = await DbProv().getBooks();
-    _filteredBooks = _books;
-    filterBooks();
-    sortBooks();
+    applyFilters();
     notifyListeners();
   }
 
@@ -51,50 +52,52 @@ class BkSt extends ChangeNotifier {
   void setSortOrder(String order) {
     _sortOrder = order;
     UsrPrefs.setSortOrder(order);
-    sortBooks();
+    applyFilters();
     notifyListeners();
-  }
-
-  void sortBooks() {
-    switch (_sortOrder) {
-      case 'author':
-        _filteredBooks.sort((a, b) => a.author.compareTo(b.author));
-        break;
-      case 'rating':
-        _filteredBooks.sort((a, b) => b.rating.compareTo(a.rating));
-        break;
-      case 'title':
-      default:
-        _filteredBooks.sort((a, b) => a.title.compareTo(b.title));
-    }
   }
 
   void searchBooks(String query) {
-    if (query.isEmpty) {
-      _filteredBooks = _books;
-    } else {
-      _filteredBooks = _books.where((book) {
-        return book.title.toLowerCase().contains(query.toLowerCase()) ||
-            book.author.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    }
-    filterBooks();
-    sortBooks();
-    notifyListeners();
-  }
-
-  void filterBooks() {
-    if (_showRead) {
-      _filteredBooks = _books;
-    } else {
-      _filteredBooks = _books.where((book) => !book.isRead).toList();
-    }
+    _searchQuery = query;
+    applyFilters();
   }
 
   void toggleShowRead(bool show) {
     _showRead = show;
-    filterBooks();
-    sortBooks();
+    applyFilters();
+  }
+
+  void resetFilters() {
+    _showRead = true;
+    _searchQuery = '';
+    applyFilters();
+  }
+
+  void applyFilters() {
+    // Filter books based on read/unread status
+    List<BkMdl> tempBooks = _showRead ? _books : _books.where((book) => !book.isRead).toList();
+
+    // Apply search query
+    if (_searchQuery.isNotEmpty) {
+      tempBooks = tempBooks.where((book) {
+        return book.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            book.author.toLowerCase().contains(_searchQuery.toLowerCase());
+      }).toList();
+    }
+
+    // Sort books based on the selected sort order
+    switch (_sortOrder) {
+      case 'author':
+        tempBooks.sort((a, b) => a.author.compareTo(b.author));
+        break;
+      case 'rating':
+        tempBooks.sort((a, b) => b.rating.compareTo(a.rating));
+        break;
+      case 'title':
+      default:
+        tempBooks.sort((a, b) => a.title.compareTo(b.title));
+    }
+
+    _filteredBooks = tempBooks;
     notifyListeners();
   }
 }

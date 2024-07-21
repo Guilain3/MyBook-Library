@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(' Personal Book Library'),
+        title: Text('Personal Book Library'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                // Handle the view all books action
+                bkState.resetFilters(); // Reset filters to view all books
               },
             ),
             ListTile(
@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/settings');
               },
-            )
+            ),
           ],
         ),
       ),
@@ -72,9 +72,9 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: bkState.books.length,
+                itemCount: bkState.filteredBooks.length,
                 itemBuilder: (context, index) {
-                  return BkCrd(book: bkState.books[index]);
+                  return BkCrd(book: bkState.filteredBooks[index]);
                 },
               ),
             ),

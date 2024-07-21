@@ -32,9 +32,9 @@ class BookListScreen extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        itemCount: bookState.books.length,
+        itemCount: bookState.filteredBooks.length,
         itemBuilder: (context, index) {
-          BkMdl book = bookState.books[index];
+          BkMdl book = bookState.filteredBooks[index];
           return ListTile(
             title: Text(book.title),
             subtitle: Text(book.author),
@@ -87,9 +87,9 @@ class BookSearchDelegate extends SearchDelegate<String> {
     return Consumer<BkSt>(
       builder: (context, state, child) {
         return ListView.builder(
-          itemCount: state.books.length,
+          itemCount: state.filteredBooks.length,
           itemBuilder: (context, index) {
-            BkMdl book = state.books[index];
+            BkMdl book = state.filteredBooks[index];
             return ListTile(
               title: Text(book.title),
               subtitle: Text(book.author),
@@ -119,9 +119,9 @@ class BookSearchDelegate extends SearchDelegate<String> {
     return Consumer<BkSt>(
       builder: (context, state, child) {
         return ListView.builder(
-          itemCount: state.books.length,
+          itemCount: state.filteredBooks.length,
           itemBuilder: (context, index) {
-            BkMdl book = state.books[index];
+            BkMdl book = state.filteredBooks[index];
             return ListTile(
               title: Text(book.title),
               subtitle: Text(book.author),
